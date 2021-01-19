@@ -13,41 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule.nacos;
+package com.alibaba.csp.sentinel.dashboard.rule.zookeeper;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.nacos.api.PropertyKeyConst;
-import com.alibaba.nacos.api.config.ConfigFactory;
-import com.alibaba.nacos.api.config.ConfigService;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Properties;
 
-/**
- * @author Eric Zhao
- * @since 1.4.0
- */
 @Configuration
-public class NacosConfig {
+public class ZookeeperConfig {
+
 
     //本次新增
-    @Value("${nacos.address}")
+    @Value("${zookeeper.address}")
     private String address;
-    //本次新增
-    @Value("${nacos.namespace}")
-    private String namespace;
 
     @Value("${data.source}")
     private String dataSource;
-
-
 
     @Bean
     public Converter<List<FlowRuleEntity>, String> flowRuleEntityEncoder() {
@@ -58,29 +48,22 @@ public class NacosConfig {
     public Converter<String, List<FlowRuleEntity>> flowRuleEntityDecoder() {
         return s -> JSON.parseArray(s, FlowRuleEntity.class);
     }
-//本次注释
-//    @Bean
-//    public ConfigService nacosConfigService() throws Exception {
-//        return ConfigFactory.createConfigService("localhost");
-//    }
-    //本次新增
+
     @Bean
-    public ConfigService nacosConfigService() throws Exception {
-        if (!"nacos".equals(dataSource)) {
-            System.out.println("数据源非nacos_无需创建 ");
+    public CuratorFramework zkClient() throws Exception {
+        if (!"zookeeper".equals(dataSource)) {
+            System.out.println("数据源非 zookeeper 无需创建 ");
             return null;
         }
-        if(StringUtil.isNotEmpty(address)&&StringUtil.isNotEmpty(namespace)){
-            Properties properties = new Properties();
-            //nacos集群地址
-            properties.put(PropertyKeyConst.SERVER_ADDR,address);
-            //namespace为空即为public
-            properties.put(PropertyKeyConst.NAMESPACE,namespace);
-            return ConfigFactory.createConfigService(properties);
+        if(StringUtil.isNotEmpty(address)){
+            CuratorFramework zkClient =
+                    CuratorFrameworkFactory.newClient(address,
+                            new ExponentialBackoffRetry(ZookeeperConfigUtil.SLEEP_TIME, ZookeeperConfigUtil.RETRY_TIMES));
+            zkClient.start();
+            return zkClient;
         }else{
-            throw  new  Exception("数据源_缺少nacos必选参数无法创建");
+            throw  new  Exception("数据源 缺少zookeeper必选参数无法创建");
         }
 
     }
-
 }

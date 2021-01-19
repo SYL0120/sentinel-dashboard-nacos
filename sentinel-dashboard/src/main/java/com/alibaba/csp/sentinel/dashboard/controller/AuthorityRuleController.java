@@ -55,11 +55,13 @@ public class AuthorityRuleController {
 //    @Autowired
 //    private SentinelApiClient sentinelApiClient;
 
-    @Autowired
-    @Qualifier("authorityRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("authorityRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<AuthorityRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("authorityRuleNacosPublisher")
+//    @Autowired
+//    @Qualifier("authorityRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<AuthorityRuleEntity>> rulePublisher;
     @Autowired
     private RuleRepository<AuthorityRuleEntity, Long> repository;

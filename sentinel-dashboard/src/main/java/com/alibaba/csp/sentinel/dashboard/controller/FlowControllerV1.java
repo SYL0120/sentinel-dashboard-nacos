@@ -49,11 +49,13 @@ public class FlowControllerV1 {
 //    private SentinelApiClient sentinelApiClient;
 
     // 本次添加 开始
-    @Autowired
-    @Qualifier("flowRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("flowRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<FlowRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("flowRuleNacosPublisher")
+//    @Autowired
+//    @Qualifier("flowRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<FlowRuleEntity>> rulePublisher;
     // 本次添加 结束
 

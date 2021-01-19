@@ -19,8 +19,10 @@ import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEn
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
 import com.alibaba.csp.sentinel.dashboard.rule.nacos.NacosConfigUtil;
+import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.nacos.api.config.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,6 +31,7 @@ import java.util.List;
  * @author Eric Zhao
  * @since 1.4.0
  */
+@ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "nacos")
 @Component("authorityRuleNacosPublisher")
 public class AuthorityRuleNacosPublisher implements DynamicRulePublisher<List<AuthorityRuleEntity>> {
 

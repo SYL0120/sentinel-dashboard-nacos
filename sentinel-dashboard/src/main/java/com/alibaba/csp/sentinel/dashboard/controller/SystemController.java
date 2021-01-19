@@ -50,11 +50,13 @@ public class SystemController {
     @Autowired
     private RuleRepository<SystemRuleEntity, Long> repository;
 
-    @Autowired
-    @Qualifier("systemRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("systemRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<SystemRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("systemRuleNacosPublisher")
+//    @Autowired
+//    @Qualifier("systemRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<SystemRuleEntity>> rulePublisher;
 
     private <R> Result<R> checkBasicParams(String app, String ip, Integer port) {

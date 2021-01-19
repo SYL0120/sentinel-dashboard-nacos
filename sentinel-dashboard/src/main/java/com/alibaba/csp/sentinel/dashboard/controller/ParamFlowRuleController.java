@@ -65,11 +65,13 @@ public class ParamFlowRuleController {
 //    @Autowired
 //    private SentinelApiClient sentinelApiClient;
 
-    @Autowired
-    @Qualifier("paramFlowRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("paramFlowRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<ParamFlowRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("paramFlowRuleNacosPublisher")
+//    @Autowired
+//    @Qualifier("paramFlowRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<ParamFlowRuleEntity>> rulePublisher;
 
     @Autowired

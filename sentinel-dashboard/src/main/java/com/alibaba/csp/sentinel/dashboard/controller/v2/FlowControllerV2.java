@@ -58,13 +58,13 @@ public class FlowControllerV2 {
     @Autowired
     private InMemoryRuleRepositoryAdapter<FlowRuleEntity> repository;
 
-    @Autowired
-//    @Qualifier("flowRuleDefaultProvider")
-    @Qualifier("flowRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("flowRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<FlowRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("flowRuleNacosPublisher")
-//    @Qualifier("flowRuleDefaultPublisher")
+//    @Autowired
+//    @Qualifier("flowRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<FlowRuleEntity>> rulePublisher;
 
     @GetMapping("/rules")

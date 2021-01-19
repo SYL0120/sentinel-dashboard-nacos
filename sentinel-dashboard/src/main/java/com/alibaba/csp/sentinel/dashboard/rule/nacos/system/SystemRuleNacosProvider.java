@@ -21,6 +21,7 @@ import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.rule.nacos.NacosConfigUtil;
 import com.alibaba.nacos.api.config.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  * @author Eric Zhao
  * @since 1.4.0
  */
+@ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "nacos")
 @Component("systemRuleNacosProvider")
 public class SystemRuleNacosProvider implements DynamicRuleProvider<List<SystemRuleEntity>> {
 

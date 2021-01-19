@@ -62,11 +62,13 @@ public class DegradeController {
 //    @Autowired
 //    private SentinelApiClient sentinelApiClient;
 
-    @Autowired
-    @Qualifier("degradeRuleNacosProvider")
+//    @Autowired
+//    @Qualifier("degradeRuleNacosProvider")
+    @Autowired(required = false)
     private DynamicRuleProvider<List<DegradeRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("degradeRuleNacosPublisher")
+//    @Autowired
+//    @Qualifier("degradeRuleNacosPublisher")
+    @Autowired(required = false)
     private DynamicRulePublisher<List<DegradeRuleEntity>> rulePublisher;
 
 
