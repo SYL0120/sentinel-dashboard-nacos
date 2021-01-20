@@ -37,15 +37,14 @@ public class ZookeeperConfigUtil {
 
     public static String getPath(String appName,String postfix) {
         StringBuilder stringBuilder = new StringBuilder(RULE_ROOT_PATH);
-
         if (StringUtils.isBlank(appName)) {
             return stringBuilder.toString();
         }
         if (appName.startsWith("/")) {
-            stringBuilder.append(appName).append("/").append(postfix).append("/").append(GROUP_ID);
+            stringBuilder.append(GROUP_ID).append("/").append(appName).append("/").append(postfix);
         } else {
             stringBuilder.append("/")
-                    .append(appName).append("/").append(postfix).append("/").append(GROUP_ID);
+                    .append(GROUP_ID).append("/").append(appName).append("/").append(postfix);
         }
         return stringBuilder.toString();
     }
