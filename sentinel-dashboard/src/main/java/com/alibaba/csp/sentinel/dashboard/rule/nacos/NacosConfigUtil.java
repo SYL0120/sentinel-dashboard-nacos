@@ -22,6 +22,7 @@ import com.alibaba.csp.sentinel.util.AssertUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public final class NacosConfigUtil {
     public static final String DEGRADE_DATA_ID_POSTFIX = "-degrade-rules";
     public static final String SYSTEM_DATA_ID_POSTFIX = "-system-rules";
     public static final String AUTHORITY_DATA_ID_POSTFIX = "-authority-rules";
+    public static final String GATEWAY_DATA_ID_POSTFIX = "-gw-flow-rules";
+    public static final String GATEWAY_API_DATA_ID_POSTFIX = "-gw-api";
     public static final String DASHBOARD_POSTFIX = "-dashboard";
 
     /**
@@ -74,20 +77,30 @@ public final class NacosConfigUtil {
         List<Rule> ruleForApp = rules.stream()
                 .map(rule -> {
                     RuleEntity rule1 = (RuleEntity) rule;
-                    System.out.println(rule1.getClass());
                     Rule rule2 = rule1.toRule();
-                    System.out.println(rule2.getClass());
-                    return rule2;
+                    if(null == rule2){
+                        return null;
+                    }else{
+                        return rule2;
+                    }
                 })
                 .collect(Collectors.toList());
 
         // 存储，给微服务使用
         String dataId = genDataId(app, postfix);
-        configService.publishConfig(
-                dataId,
-                NacosConfigUtil.GROUP_ID,
-                JSONUtils.toJSONString(ruleForApp)
-        );
+        if(NacosConfigUtil.GATEWAY_API_DATA_ID_POSTFIX.equals(postfix)||NacosConfigUtil.GATEWAY_DATA_ID_POSTFIX.equals(postfix) ){
+            configService.publishConfig(
+                    dataId,
+                    NacosConfigUtil.GROUP_ID,
+                    JSONUtils.toJSONString(rules)
+            );
+        }else{
+            configService.publishConfig(
+                    dataId,
+                    NacosConfigUtil.GROUP_ID,
+                    JSONUtils.toJSONString(ruleForApp));
+        }
+
 
         // 存储，给控制台使用
         configService.publishConfig(

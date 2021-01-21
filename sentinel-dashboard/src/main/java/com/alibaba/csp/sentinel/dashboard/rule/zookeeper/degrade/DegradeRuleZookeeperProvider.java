@@ -31,6 +31,12 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @Description 读取降级规则
+ * @Author shiyanling
+ * @Date 2021/1/21 16:00
+ **/
 @ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "zookeeper")
 @Component("degradeRuleZookeeperProvider")
 public class DegradeRuleZookeeperProvider implements DynamicRuleProvider<List<DegradeRuleEntity>> {

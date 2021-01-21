@@ -33,6 +33,11 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+/**
+ * @Description 写入热点限流规则
+ * @Author shiyanling
+ * @Date 2021/1/21 16:00
+ **/
 @ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "zookeeper")
 @Component("paramFlowRuleZookeeperPublisher")
 public class ParamFlowRuleZookeeperPublisher implements DynamicRulePublisher<List<ParamFlowRuleEntity>> {

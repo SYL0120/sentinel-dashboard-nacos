@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule.zookeeper.system;
+package com.alibaba.csp.sentinel.dashboard.rule.zookeeper.gateway.api;
 
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
+import com.alibaba.csp.sentinel.dashboard.rule.nacos.NacosConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.rule.zookeeper.ZookeeperConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.util.JSONUtils;
-import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
+import com.alibaba.nacos.api.config.ConfigService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
@@ -33,23 +34,26 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * @Description 写入系统规则
- * @Author shiyanling
- * @Date 2021/1/21 16:00
- **/
+ * @description 写入网关组信息
+ * @author Eric Zhao
+ * @since 1.4.0
+ */
 @ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "zookeeper")
-@Component("systemRuleZookeeperPublisher")
-public class SystemRuleZookeeperPublisher implements DynamicRulePublisher<List<SystemRuleEntity>> {
+@Component("gateWayApiZookeeperPublisher")
+public class GateWayApiZookeeperPublisher implements DynamicRulePublisher<List<ApiDefinitionEntity>> {
+
+
+//    @Autowired
+//    private Converter<List<FlowRuleEntity>, String> converter;
+
     @Autowired
     private CuratorFramework zkClient;
-//    @Autowired
-//    private Converter<List<SystemRuleEntity>, String> converter;
 
     @Override
-    public void publish(String app, List<SystemRuleEntity> rules) throws Exception {
+    public void publish(String app, List<ApiDefinitionEntity> rules) throws Exception {
         AssertUtil.notEmpty(app, "app name cannot be empty");
 
-        String path = ZookeeperConfigUtil.getPath(app,ZookeeperConfigUtil.SYSTEM_DATA_ID_POSTFIX);
+        String path = ZookeeperConfigUtil.getPath(app,ZookeeperConfigUtil.GATEWAY_API_DATA_ID_POSTFIX);
         Stat stat = zkClient.checkExists().forPath(path);
         if (stat == null) {
             zkClient.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path, null);

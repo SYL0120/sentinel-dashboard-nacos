@@ -38,6 +38,8 @@ public class SimpleMachineDiscovery implements MachineDiscovery {
     public long addMachine(MachineInfo machineInfo) {
         AssertUtil.notNull(machineInfo, "machineInfo cannot be null");
         AppInfo appInfo = apps.computeIfAbsent(machineInfo.getApp(), o -> new AppInfo(machineInfo.getApp(), machineInfo.getAppType()));
+
+
         appInfo.addMachine(machineInfo);
         return 1;
     }

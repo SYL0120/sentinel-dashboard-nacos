@@ -30,6 +30,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * @Description 读取热点限流规则
+ * @Author shiyanling
+ * @Date 2021/1/21 16:00
+ **/
 @ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "zookeeper")
 @Component("paramFlowRuleZookeeperProvider")
 public class ParamFlowRuleZookeeperProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {

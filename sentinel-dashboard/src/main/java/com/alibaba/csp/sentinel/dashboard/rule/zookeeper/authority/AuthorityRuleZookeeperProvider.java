@@ -30,6 +30,12 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @Description 获取授权规则
+ * @Author shiyanling
+ * @Date 2021/1/21 16:00
+ **/
 @ConditionalOnProperty(prefix = "data" ,name="source",havingValue = "zookeeper")
 @Component("authorityRuleZookeeperProvider")
 public class AuthorityRuleZookeeperProvider implements DynamicRuleProvider<List<AuthorityRuleEntity>> {
@@ -37,8 +43,6 @@ public class AuthorityRuleZookeeperProvider implements DynamicRuleProvider<List<
     @Autowired
     private CuratorFramework zkClient;
 
-//    @Autowired
-//    private Converter<String, List<AuthorityRuleEntity>> converter;
 
     @Override
     public List<AuthorityRuleEntity> getRules(String appName) throws Exception {

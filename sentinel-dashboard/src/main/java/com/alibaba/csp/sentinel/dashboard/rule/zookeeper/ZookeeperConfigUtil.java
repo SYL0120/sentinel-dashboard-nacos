@@ -27,6 +27,8 @@ public class ZookeeperConfigUtil {
     public static final String DEGRADE_DATA_ID_POSTFIX = "degrade-rules";
     public static final String SYSTEM_DATA_ID_POSTFIX = "system-rules";
     public static final String AUTHORITY_DATA_ID_POSTFIX = "authority-rules";
+    public static final String GATEWAY_DATA_ID_POSTFIX = "gw-flow-rules";
+    public static final String GATEWAY_API_DATA_ID_POSTFIX = "gw-api";
 
     public static final int RETRY_TIMES = 3;
     public static final int SLEEP_TIME = 1000;
