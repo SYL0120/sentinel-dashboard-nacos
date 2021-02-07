@@ -267,6 +267,7 @@ public class FlowControllerV1 {
             publishRules(oldEntity.getApp());
             //本次注释
 //            publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort()).get(5000, TimeUnit.MILLISECONDS);
+            TimeUnit.SECONDS.sleep(1);
             return Result.ofSuccess(id);
         } catch (Throwable t) {
             Throwable e = t instanceof ExecutionException ? t.getCause() : t;

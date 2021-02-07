@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.client.CommandNotFoundException;
@@ -259,6 +260,7 @@ public class ParamFlowRuleController {
         try {
             repository.delete(id);
             publishRules(oldEntity.getApp());
+            TimeUnit.SECONDS.sleep(1);
 //            publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort()).get();
             return Result.ofSuccess(id);
         } catch (ExecutionException ex) {

@@ -17,6 +17,7 @@ package com.alibaba.csp.sentinel.dashboard.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
@@ -168,6 +169,7 @@ public class DegradeController {
         try {
             repository.delete(id);
             publishRules(oldEntity.getApp());
+            TimeUnit.SECONDS.sleep(1);
         } catch (Throwable throwable) {
             logger.error("Failed to delete degrade rule, id={}", id, throwable);
             return Result.ofThrowable(-1, throwable);

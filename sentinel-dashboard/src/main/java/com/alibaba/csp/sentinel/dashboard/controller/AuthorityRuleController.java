@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eric Zhao
@@ -188,6 +189,7 @@ public class AuthorityRuleController {
         try {
             repository.delete(id);
             publishRules(oldEntity.getApp());
+            TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {
             return Result.ofFail(-1, e.getMessage());
         }
